@@ -12,6 +12,20 @@ const Home = () => {
         const proceed = window.confirm("Are you sure you want to delete?");
         if (proceed) {
             console.log("Deleting user with id", id);
+            const url = `http://localhost:5000/user/${id}`;
+
+            fetch(url, {
+                method: "DELETE"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deleteCount > 0) {
+                        console.log("deleted");
+                        const remaining = users.filter(user => user._id !== id);
+                        setUsers(remaining);
+                    }
+
+                })
         }
 
     }
